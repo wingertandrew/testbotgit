@@ -16,8 +16,8 @@ app.intent('ask_planet_intent', (conv, {planet}) => {
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
-            const {definition, word} = snapshot.data();
-    conv.ask(`Here you go, ${word}, ${definition}. ` +
+            const {third, definition, word} = snapshot.data();
+    conv.ask(`Here you go, ${word}, ${third} ${definition}. ` +
             `What else do you want to know?`);
    
    
