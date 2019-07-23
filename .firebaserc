@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "testbot-unqsfw"
+    "default": "crewbot-ulxhhq",
+    "crewbot": "crewbot-ulxhhq"
   }
 }

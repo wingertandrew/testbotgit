@@ -7,7 +7,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "/Users/Andrew/Google\\ Drive/code_projects/GitHub/testbot",
+    "public": "/Users/Andrew/Google\\ Drive/code_projects/GitHub/testbot/testbotgit ",
     "ignore": [
       "firebase.json",
       "**/.*",
