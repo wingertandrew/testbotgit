@@ -23,7 +23,7 @@ app.intent('ask_planet_intent', (conv, {planet}) => {
    
         }).catch((e) => {
 console.log('error:', e);
-conv.close('Sorry, try again and tell me another planet.');
+conv.close('Error, Not that smart yet. Ask for "tell me about (crewmember).');
     });
 });
 
