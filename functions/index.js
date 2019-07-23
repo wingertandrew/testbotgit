@@ -17,8 +17,8 @@ app.intent('ask_planet_intent', (conv, {planet}) => {
         return termRef.get()
             .then((snapshot) => {
             const {crew, arrival, departure, hotelconf, phone, position} = snapshot.data();
-    conv.ask(`Here's your info${crew}, your arrival is ${arrival} and you leave on ${departure}.
-                hotel conformation is ${hotelconf}, postion is ${position} and phone is ${phone}.` 
+    conv.ask(`Here's your info ${crew}, your arrival is ${arrival} and you leave on ${departure}.
+                Hotel conformation is ${hotelconf}, postion is ${position} and phone is ${phone}.` 
                // + `What else do you want to know?`
                );
    
