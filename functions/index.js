@@ -8,48 +8,45 @@ console.log("Line 7")
 const app = dialogflow({debug: true});
 admin.initializeApp();
 const db = admin.firestore();
+
+//------------DATABASE CALL DEFINITIONS ---------------------------------------------------------
 const collectionRef = db.collection('planets');
 const collectionRefAddress = db.collection('addresses');
 
-//--------------------------------------------------------------------------------------------
-
+//------------INTENT MAP FOR GENERAL CREW INFO DUMP----------------------------------------
 app.intent('ask_planet_intent', (conv, {planet}) => {
     const term = planet.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
-            const {crew, arrival, departure, hotelconf, phone, position} = snapshot.data();
-    conv.ask(`Here's your info ${crew}, you arrive ${arrival} and you depart ${departure}.
-                Hotel conformation is ${hotelconf}, postion is ${position} and phone is ${phone}.` 
+            const {crew, arrival, departure, hotelconf, call_one} = snapshot.data();
+    conv.ask(`Here's ${crew} info, ${arrival} arrival. ${departure} departure. 
+                Hotel conformation is ${hotelconf}, 21st call time is ${call_one} .` 
                );
    
-   
+
         }).catch((e) => {
 console.log('error:', e);
 conv.close('Error, Not that smart yet. Ask for "tell me about (crewmember).');
     });
 });
-
-//------------------------------------------------------------------------------------------
-
- app.intent('UserAskHotel', (conv, {address}) => {
+//-------------INTENT MAP FOR ADDRESSES------------------------------------------------
+app.intent('UserAskHotel', (conv, {address}) => {
     const term = address.toLowerCase();
     const termRef = collectionRefAddress.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
-            const {address} = snapshot.data();
-    conv.ask(`Here's your info ${address}.` 
+            const {address, url} = snapshot.data();
+    conv.ask(`Here's the hotel address ${address} & the Google Maps link ${url}.` 
                );
    
    
         }).catch((e) => {
 console.log('error:', e);
-conv.close('Error 2, the individual one does not work.');
+conv.close('UserAskHotel .');
     });
 }); 
-
-//------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------------
 
 
 exports.actionsOracle = functions.https.onRequest(app);
