@@ -14,8 +14,8 @@ const collectionRef = db.collection('crew');
 const collectionRefAddress = db.collection('addresses');
 
 //------------INTENT MAP FOR GENERAL CREW INFO DUMP----------------------------------------
-app.intent('ask_all_info', (conv, {crew}) => {
-    const term = crew.toLowerCase();
+app.intent('ask_all_info', (conv, {crewEntity}) => {
+    const term = crewEntity.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
@@ -27,7 +27,7 @@ app.intent('ask_all_info', (conv, {crew}) => {
 
         }).catch((e) => {
 console.log('error:', e);
-conv.close('ask_all_info error, something inside the code is broken.');
+conv.close('ask_all_info error, something inside the code is broken');
     });
 });
 //-------------INTENT MAP FOR ADDRESSES------------------------------------------------
@@ -48,8 +48,8 @@ conv.close('UserAskHotel .');
 }); 
 
 //------------INTENT MAP FOR TRAVEL INFO----------------------------------------
-app.intent('User_Asks_Travel', (conv, {crew}) => {
-    const term = crew.toLowerCase();
+app.intent('User_Asks_Travel', (conv, {crewEntity}) => {
+    const term = crewEntity.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
