@@ -71,7 +71,7 @@ app.intent('User_Asks_Hotel_Conf', (conv, {planet}) => {
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
-            const {arrival, departure, hotel_conf, hotel_checkout} = snapshot.data();
+            const {arrival, departure, hotel_conf, hotel_checkout, hotel_checkin} = snapshot.data();
     conv.ask(`Your hotel confirmation is ${hotel_conf}. Check in: ${hotel_checkin} at ${arrival} Check out: ${departure} at ${hotel_checkout} ` 
                );
    
