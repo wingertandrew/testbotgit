@@ -10,12 +10,12 @@ admin.initializeApp();
 const db = admin.firestore();
 
 //------------DATABASE CALL DEFINITIONS ---------------------------------------------------------
-const collectionRef = db.collection('planets');
+const collectionRef = db.collection('crew');
 const collectionRefAddress = db.collection('addresses');
 
 //------------INTENT MAP FOR GENERAL CREW INFO DUMP----------------------------------------
-app.intent('ask_all_info', (conv, {planet}) => {
-    const term = planet.toLowerCase();
+app.intent('ask_all_info', (conv, {crew}) => {
+    const term = crew.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
@@ -48,8 +48,8 @@ conv.close('UserAskHotel .');
 }); 
 
 //------------INTENT MAP FOR TRAVEL INFO----------------------------------------
-app.intent('User_Asks_Travel', (conv, {planet}) => {
-    const term = planet.toLowerCase();
+app.intent('User_Asks_Travel', (conv, {crew}) => {
+    const term = crew.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
