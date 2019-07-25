@@ -14,20 +14,20 @@ const collectionRef = db.collection('planets');
 const collectionRefAddress = db.collection('addresses');
 
 //------------INTENT MAP FOR GENERAL CREW INFO DUMP----------------------------------------
-app.intent('ask_planet_intent', (conv, {planet}) => {
+app.intent('ask_all_info', (conv, {planet}) => {
     const term = planet.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
-            const {crew, arrival, departure, hotelconf, call_one} = snapshot.data();
+            const {crew, arrival, departure, hotel_conf, call_one} = snapshot.data();
     conv.ask(`Here's ${crew} info, ${arrival} arrival. ${departure} departure. 
-                Hotel conformation is ${hotelconf}, 21st call time is ${call_one} .` 
+                Hotel conformation is ${hotel_conf}, 21st call time is ${call_one}.` 
                );
    
 
         }).catch((e) => {
 console.log('error:', e);
-conv.close('Error, Not that smart yet. Ask for "tell me about (crewmember).');
+conv.close('ask_all_info error, something inside the code is broken.');
     });
 });
 //-------------INTENT MAP FOR ADDRESSES------------------------------------------------
