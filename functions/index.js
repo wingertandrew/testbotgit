@@ -10,12 +10,12 @@ admin.initializeApp();
 const db = admin.firestore();
 
 //------------DATABASE CALL DEFINITIONS ---------------------------------------------------------
-const collectionRef = db.collection('crew');
+const collectionRef = db.collection('planets');
 const collectionRefAddress = db.collection('addresses');
 
 //------------INTENT MAP FOR GENERAL CREW INFO DUMP----------------------------------------
-app.intent('ask_all_info', (conv, {crewEntity}) => {
-    const term = crewEntity.toLowerCase();
+app.intent('ask_all_info', (conv, {planet}) => {
+    const term = planet.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
@@ -31,25 +31,25 @@ conv.close('ask_all_info error, something inside the code is broken');
     });
 });
 //-------------INTENT MAP FOR ADDRESSES------------------------------------------------
-app.intent('UserAskHotel', (conv, {address}) => {
+app.intent('User_Ask_Address', (conv, {address}) => {
     const term = address.toLowerCase();
     const termRef = collectionRefAddress.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
             const {address, url} = snapshot.data();
-    conv.ask(`Here's the hotel address ${address} & the Google Maps link ${url}.` 
+    conv.ask(`${address} & the Google Maps link ${url}.` 
                );
    
    
         }).catch((e) => {
 console.log('error:', e);
-conv.close('UserAskHotel .');
+conv.close('User_Ask_Address .');
     });
 }); 
 
 //------------INTENT MAP FOR TRAVEL INFO----------------------------------------
-app.intent('User_Asks_Travel', (conv, {crewEntity}) => {
-    const term = crewEntity.toLowerCase();
+app.intent('User_Asks_Travel', (conv, {planet}) => {
+    const term = planet.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
@@ -62,6 +62,23 @@ app.intent('User_Asks_Travel', (conv, {crewEntity}) => {
         }).catch((e) => {
 console.log('error:', e);
 conv.close('User_Ask_Travel, error. It works enough to get to this error at least.');
+    });
+});
+
+//------------INTENT MAP FOR INDIVIDUAL HOTEL INFO----------------------------------------
+app.intent('User_Asks_Hotel_Conf', (conv, {planet}) => {
+    const term = planet.toLowerCase();
+    const termRef = collectionRef.doc(`${term}`);
+        return termRef.get()
+            .then((snapshot) => {
+            const {arrival, departure, hotel_conf, hotel_checkout} = snapshot.data();
+    conv.ask(`Your hotel confirmation is ${hotel_conf}. Check in: ${hotel_checkin} at ${arrival} Check out: ${departure} at ${hotel_checkout} ` 
+               );
+   
+
+        }).catch((e) => {
+console.log('error:', e);
+conv.close('User_Ask_Hotel_Conf, error. It works enough to get to this error at least.');
     });
 });
 //------------------------------------------------------------------------------------
