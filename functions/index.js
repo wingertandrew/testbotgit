@@ -46,6 +46,24 @@ console.log('error:', e);
 conv.close('UserAskHotel .');
     });
 }); 
+
+//------------INTENT MAP FOR TRAVEL INFO----------------------------------------
+app.intent('User_Asks_Travel', (conv, {planet}) => {
+    const term = planet.toLowerCase();
+    const termRef = collectionRef.doc(`${term}`);
+        return termRef.get()
+            .then((snapshot) => {
+            const {crew, arrival, flight_arrive, hotel_conf, departure, flight_depart} = snapshot.data();
+    conv.ask(`${crew} arrives ${arrival} on ${flight_arrive}. Hotel conformation ${hotel_conf}.
+                Departure is ${departure} on ${flight_depart}.` 
+               );
+   
+
+        }).catch((e) => {
+console.log('error:', e);
+conv.close('User_Ask_Travel, error. It works enough to get to this error at least.');
+    });
+});
 //------------------------------------------------------------------------------------
 
 
