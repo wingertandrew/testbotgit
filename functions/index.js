@@ -65,23 +65,23 @@ conv.close('User_Ask_Travel, error. It works enough to get to this error at leas
     });
 });
 
-//------------INTENT MAP FOR INDIVIDUAL HOTEL INFO----------------------------------------
-app.intent('User_Asks_Hotel_Conf', (conv, {planet}) => {
+//------------INTENT MAP FOR HOTEL CONFIRMATION----------------------------------------
+app.intent('User_Ask_Hotel_Conf', (conv, {planet}) => {
     const term = planet.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
-            const {arrival, departure, hotel_conf, hotel_checkout, hotel_checkin} = snapshot.data();
-    conv.ask(`Your hotel confirmation is ${hotel_conf}. Check in: ${hotel_checkin} at ${arrival} Check out: ${departure} at ${hotel_checkout} ` 
+            const {arrival, hotel_checkin, hotel_conf, departure, hotel_checkout} = snapshot.data();
+    conv.ask(`Confirmation #${hotel_conf}. You're set to arrive ${arrival} checking in at ${hotel_checkin}. Checking out ${departure} at ${hotel_checkout}.` 
                );
    
 
         }).catch((e) => {
 console.log('error:', e);
-conv.close('User_Ask_Hotel_Conf, error. It works enough to get to this error at least.');
+conv.close('Hotel Confirmation error, something inside the code is broken');
     });
 });
-//------------------------------------------------------------------------------------
+
 
 
 exports.actionsOracle = functions.https.onRequest(app);
