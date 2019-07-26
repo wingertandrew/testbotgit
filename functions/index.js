@@ -89,13 +89,13 @@ app.intent('User_Asks_Group_Call', (conv, {crewgroup}) => {
         return termRef.get()
             .then((snapshot) => {
             const {crew_group, date_one, call_one} = snapshot.data();
-    conv.ask(`the ${crew_group} is ${call_one} on ${date_one}` 
+    conv.ask(`the ${crew_group} call is ${call_one} on ${date_one}`
                );
    
    
         }).catch((e) => {
 console.log('error:', e);
-conv.close('User_Ask_Address error .');
+conv.close('Call group error .');
     });
 }); 
 
