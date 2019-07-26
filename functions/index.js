@@ -20,7 +20,7 @@ app.intent('ask_all_info', (conv, {planet}) => {
         return termRef.get()
             .then((snapshot) => {
             const {crew, position, arrival, departure, call_one} = snapshot.data();
-    conv.ask(`${crew} is the ${position}. ${arrival} arrival. ${departure} departure. 21st call time is ${call_one}. Do you have any other questions?` 
+    conv.ask(`${crew} is the ${position}. ${arrival} arrival. ${departure} departure. 21st call time is ${call_one}. Do you need more info?` 
                );
    
 
@@ -36,7 +36,7 @@ app.intent('User_Ask_Address', (conv, {address}) => {
         return termRef.get()
             .then((snapshot) => {
             const {address, url} = snapshot.data();
-    conv.ask(`${address} & the Google Maps link ${url}. Do you have any other questions?` 
+    conv.ask(`${address} & the Google Maps link ${url}. Do you need more info?` 
                );
    
    
@@ -54,7 +54,7 @@ app.intent('User_Asks_Travel', (conv, {planet}) => {
             .then((snapshot) => {
             const {crew, arrival, flight_arrive, hotel_conf, departure, flight_depart} = snapshot.data();
     conv.ask(`${crew} arrives ${arrival} on ${flight_arrive}. Hotel conformation ${hotel_conf}.
-                Departure is ${departure} on ${flight_depart}. Do you have any other questions?` 
+                Departure is ${departure} on ${flight_depart}. Do you need more info?` 
                );
    
 
@@ -71,7 +71,7 @@ app.intent('User_Ask_Hotel_Conf', (conv, {planet}) => {
         return termRef.get()
             .then((snapshot) => {
             const {arrival, hotel_checkin, hotel_conf, departure, hotel_checkout} = snapshot.data();
-    conv.ask(`Confirmation #${hotel_conf}. You're set to arrive ${arrival} checking in at ${hotel_checkin}. Checking out ${departure} at ${hotel_checkout}. Do you have any other questions?.` 
+    conv.ask(`Confirmation #${hotel_conf}. You're set to arrive ${arrival} checking in at ${hotel_checkin}. Checking out ${departure} at ${hotel_checkout}. Do you need more info?.` 
                );
    
 
