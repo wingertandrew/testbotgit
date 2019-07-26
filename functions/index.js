@@ -12,6 +12,7 @@ const db = admin.firestore();
 //------------DATABASE CALL DEFINITIONS ---------------------------------------------------------
 const collectionRef = db.collection('planets');
 const collectionRefAddress = db.collection('addresses');
+const collectionRefCalls = db.collection('calls');
 
 //------------INTENT MAP FOR GENERAL CREW INFO DUMP----------------------------------------
 app.intent('ask_all_info', (conv, {planet}) => {
@@ -81,7 +82,22 @@ conv.close('Hotel Confirmation error, something inside the code is broken');
     });
 });
 
-
+//------------INTENT MAP FOR CALL GROUPS----------------------------------------
+app.intent('User_Asks_Group_Call', (conv, {crewgroup}) => {
+    const term = crewgroup.toLowerCase();
+    const termRef = collectionRefCalls.doc(`${term}`);
+        return termRef.get()
+            .then((snapshot) => {
+            const {crew_group, date_one, call_one} = snapshot.data();
+    conv.ask(`the ${crew_group} is ${call_one} on ${date_one}` 
+               );
+   
+   
+        }).catch((e) => {
+console.log('error:', e);
+conv.close('User_Ask_Address error .');
+    });
+}); 
 
 exports.actionsOracle = functions.https.onRequest(app);
 console.log("Line 49")
