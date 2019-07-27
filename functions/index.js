@@ -20,8 +20,8 @@ app.intent('ask_all_info', (conv, {planet}) => {
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
-            const {crew, position, arrival, departure, call_one} = snapshot.data();
-    conv.ask(`${crew} is the ${position}. ${arrival} arrival. ${departure} departure. 21st call time is ${call_one}. Do you need more info?` 
+            const {crew, position, phone, email} = snapshot.data();
+    conv.ask(`${crew} is the ${position}. Contact info: ${phone}, ${email}. Do you need to know anything else?` 
                );
    
 
