@@ -15,8 +15,8 @@ const collectionRefAddress = db.collection('addresses');
 const collectionRefCalls = db.collection('calls');
 
 //------------INTENT MAP FOR ASK CREW INFO----------------------------------------
-app.intent('Ask_Crew_Info', (conv, {planet}) => {
-    const term = planet.toLowerCase();
+app.intent('Ask_Crew_Info', (conv, {crewentity}) => {
+    const term = crewentity.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
@@ -48,8 +48,8 @@ conv.close('User_Ask_Address error .');
 }); 
 
 //------------INTENT MAP FOR FlIGHT INFO----------------------------------------
-app.intent('User_Asks_Travel', (conv, {planet}) => {
-    const term = planet.toLowerCase();
+app.intent('User_Asks_Travel', (conv, {crewentity}) => {
+    const term = crewentity.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
@@ -66,8 +66,8 @@ conv.close('User_Ask_Travel, error. It works enough to get to this error at leas
 });
 
 //------------INTENT MAP FOR HOTEL CONFIRMATION----------------------------------------
-app.intent('User_Ask_Hotel_Conf', (conv, {planet}) => {
-    const term = planet.toLowerCase();
+app.intent('User_Ask_Hotel_Conf', (conv, {crewentity}) => {
+    const term = crewentity.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
