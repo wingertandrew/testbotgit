@@ -88,8 +88,8 @@ app.intent('User_Asks_Group_Call', (conv, {crewgroup}) => {
     const termRef = collectionRefCalls.doc(`${term}`);
         return termRef.get()
             .then((snapshot) => {
-            const {crew_group, date_one, call_one} = snapshot.data();
-    conv.ask(`the ${crew_group} call is ${call_one} on ${date_one}`
+            const {crew_group, date_one, call_one, date_two, call_two, date_three, call_three, date_four, call_four, date_five, call_five} = snapshot.data();
+    conv.ask(`The ${crew_group} call on ${date_one} is ${call_one}. ${date_two} ${call_two}. ${date_three} ${call_three}. ${date_four} ${call_four}. ${date_five} ${call_five}.`
                );
    
    
