@@ -47,7 +47,7 @@ conv.close('User_Ask_Address error .');
     });
 }); 
 
-//------------INTENT MAP FOR FlIGHT INFO----------------------------------------
+//------------INTENT MAP FOR TRAVEL----------------------------------------
 app.intent('User_Asks_Travel', (conv, {crewentity}) => {
     const term = crewentity.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
@@ -98,6 +98,8 @@ console.log('error:', e);
 conv.close('Call group error.');
     });
 }); 
+
+
 
 exports.actionsOracle = functions.https.onRequest(app);
 console.log("Line 49")
