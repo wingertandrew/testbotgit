@@ -37,7 +37,7 @@ app.intent('User_Ask_Address', (conv, {address}) => {
         return termRef.get()
             .then((snapshot) => {
             const {address, url} = snapshot.data();
-    conv.ask(`${address} & the Google Maps link ${url}. Do you need more info?` 
+    conv.ask(`${address} & Google Maps ${url}. Do you need more info?` 
                );
    
    
