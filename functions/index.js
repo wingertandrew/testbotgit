@@ -9,13 +9,13 @@ const app = dialogflow({debug: true});
 admin.initializeApp();
 const db = admin.firestore();
 
-//------------DATABASE CALL DEFINITIONS ---------------------------------------------------------
+//---------DATABASE CALL DEFINITIONS ---------------------------------------------------------
 const collectionRef = db.collection('crew');
 const collectionRefAddress = db.collection('addresses');
 const collectionRefCalls = db.collection('calls');
 
-//------------INTENT MAP FOR GENERAL CREW INFO DUMP----------------------------------------
-app.intent('ask_all_info', (conv, {planet}) => {
+//------------INTENT MAP FOR ASK CREW INFO----------------------------------------
+app.intent('Ask_Crew_Info', (conv, {planet}) => {
     const term = planet.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
         return termRef.get()
@@ -27,7 +27,7 @@ app.intent('ask_all_info', (conv, {planet}) => {
 
         }).catch((e) => {
 console.log('error:', e);
-conv.close('ask_all_info error, something inside the code is broken');
+conv.close('Ask_Crew_Info error, something inside the code is broken');
     });
 });
 //-------------INTENT MAP FOR ADDRESSES------------------------------------------------
@@ -89,13 +89,13 @@ app.intent('User_Asks_Group_Call', (conv, {crewgroup}) => {
         return termRef.get()
             .then((snapshot) => {
             const {crew_group, date_one, call_one, date_two, call_two, date_three, call_three, date_four, call_four, date_five, call_five} = snapshot.data();
-    conv.ask(`The ${crew_group} call on ${date_one} is ${call_one}. ${date_two} ${call_two}. ${date_three} ${call_three}. ${date_four} ${call_four}. ${date_five} ${call_five}.`
+    conv.ask(`The ${crew_group} call on ${date_one} is ${call_one}. ${date_two} - ${call_two}. ${date_three} - ${call_three}. ${date_four} - ${call_four}. ${date_five} - ${call_five}.`
                );
    
    
         }).catch((e) => {
 console.log('error:', e);
-conv.close('Call group error .');
+conv.close('Call group error.');
     });
 }); 
 
