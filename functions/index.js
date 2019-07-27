@@ -10,7 +10,7 @@ admin.initializeApp();
 const db = admin.firestore();
 
 //------------DATABASE CALL DEFINITIONS ---------------------------------------------------------
-const collectionRef = db.collection('planets');
+const collectionRef = db.collection('crew');
 const collectionRefAddress = db.collection('addresses');
 const collectionRefCalls = db.collection('calls');
 
