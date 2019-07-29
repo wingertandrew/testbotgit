@@ -9,12 +9,12 @@ const app = dialogflow({debug: true});
 admin.initializeApp();
 const db = admin.firestore();
 
-//---------DATABASE CALL DEFINITIONS ---------------------------------------------------------
+//---------DATABASE CALL DEFINITIONS ----------------------------------------------
 const collectionRef = db.collection('crew');
 const collectionRefAddress = db.collection('addresses');
 const collectionRefCalls = db.collection('calls');
 
-//------------INTENT MAP FOR ASK CREW INFO----------------------------------------
+//------------INTENT MAP FOR ASK CREW INFO-----------------------------------------
 app.intent('Ask_Crew_Info', (conv, {crewentity}) => {
     const term = crewentity.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
@@ -30,7 +30,7 @@ console.log('error:', e);
 conv.close('Ask_Crew_Info error, something inside the code is broken');
     });
 });
-//-------------INTENT MAP FOR ADDRESSES------------------------------------------------
+//-------------INTENT MAP FOR ADDRESSES--------------------------------------------
 app.intent('User_Ask_Address', (conv, {address}) => {
     const term = address.toLowerCase();
     const termRef = collectionRefAddress.doc(`${term}`);
@@ -47,7 +47,7 @@ conv.close('User_Ask_Address error .');
     });
 }); 
 
-//------------INTENT MAP FOR TRAVEL----------------------------------------
+//------------INTENT MAP FOR TRAVEL------------------------------------------------
 app.intent('User_Asks_Travel', (conv, {crewentity}) => {
     const term = crewentity.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
@@ -65,7 +65,7 @@ conv.close('User_Ask_Travel, error. It works enough to get to this error at leas
     });
 });
 
-//------------INTENT MAP FOR HOTEL CONFIRMATION----------------------------------------
+//------------INTENT MAP FOR HOTEL CONFIRMATION------------------------------------
 app.intent('User_Ask_Hotel_Conf', (conv, {crewentity}) => {
     const term = crewentity.toLowerCase();
     const termRef = collectionRef.doc(`${term}`);
@@ -82,7 +82,7 @@ conv.close('Hotel Confirmation error, something inside the code is broken');
     });
 });
 
-//------------INTENT MAP FOR CALL GROUPS----------------------------------------
+//------------INTENT MAP FOR CALL GROUPS-------------------------------------------
 app.intent('User_Asks_Group_Call', (conv, {crewgroup}) => {
     const term = crewgroup.toLowerCase();
     const termRef = collectionRefCalls.doc(`${term}`);
@@ -99,6 +99,22 @@ conv.close('Call group error.');
     });
 }); 
 
+//------------INTENT MAP FOR ASK CREW INFO-----------------------------------------
+app.intent('transport_car_ride', (conv, {crewentity}) => {
+    const term = crewentity.toLowerCase();
+    const termRef = collectionRef.doc(`${term}`);
+        return termRef.get()
+            .then((snapshot) => {
+            const {arrival, transport_car_agency, transport_car_conf, transport_car_passenger, departure} = snapshot.data();
+    conv.ask(`Your car starts on ${arrival}. ${transport_car_agency}, conf:${transport_car_conf}. Passengers are ${transport_car_passenger}. Vehicle return ${departure}. Do you need anything else? You can ask for the name of a crew member to get their contact information.` 
+               );
+   
+
+        }).catch((e) => {
+console.log('error:', e);
+conv.close('Ask_Crew_Info error, something inside the code is broken');
+    });
+});
 
 
 exports.actionsOracle = functions.https.onRequest(app);
