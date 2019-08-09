@@ -63,11 +63,12 @@ app.intent('crew.individual_call_time', (conv, {crewentity}) => {
             const {crew, date_one, call_one, date_two, call_two, 
                     date_three, call_three, date_four, call_four, 
                     date_five, call_five} = snapshot.data();
-    conv.ask(`${crew}'s call on ${date_one} is ${call_one}. | 
-                ${date_two} is ${call_two}. | 
-                ${date_three} is ${call_three}. | 
-                ${date_four} is ${call_four}. | 
-                ${date_five} is ${call_five}. 
+    conv.ask(`${crew}'s call on 
+    ${date_one} - ${call_one}. | 
+    ${date_two} - ${call_two}. | 
+    ${date_three} - ${call_three}. | 
+    ${date_four} - ${call_four}. | 
+    ${date_five} - ${call_five}. 
     Do you need more info?` 
                );
    
