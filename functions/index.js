@@ -14,7 +14,7 @@ const collectionRefCrew = db.collection('crew');
 const collectionRefAddress = db.collection('addresses');
 const collectionRefCalls = db.collection('calls');
 const collectionRefSiteOps = db.collection('siteops');
-//const collectionRefSchedule = db.collection('schedule');
+const collectionRefSchedule = db.collection('schedule');
 const collectionRefBilling = db.collection('billing');
 const collectionRefTranspo = db.collection('transpo');
 
@@ -103,7 +103,7 @@ app.intent('crew.hotel_confirmation', (conv, {crewentity}) => {
         return termRef.get()
             .then((snapshot) => {
             const {arrival, hotel_checkin, hotel_conf, departure, hotel_checkout} = snapshot.data();
-    conv.ask(`Confirmation #${hotel_conf}. You're set to arrive ${arrival} checking in at ${hotel_checkin}. Checking out ${departure} at ${hotel_checkout}. Do you need more info?.` 
+    conv.ask(`Confirmation #${hotel_conf}. You're set to arrive ${arrival} checking in at ${hotel_checkin}. Checking out ${departure} at ${hotel_checkout}. Do you need more info?` 
                );
    
 
@@ -139,7 +139,9 @@ app.intent('addresses.info', (conv, {address}) => {
         return termRef.get()
             .then((snapshot) => {
             const {address, url, place, phone} = snapshot.data();
-    conv.ask(`${place} - ${address} - ${phone} - Map: ${url}` 
+    conv.ask(`${place} - ${address} - ${phone} - Map: ${url}
+    
+    Do you need more info?` 
                );
    
    
@@ -184,17 +186,25 @@ app.intent('siteops.radio_channels', (conv, {siteopsentity}) => {
                 lighting_audio_channel,features_tech_name,features_tech_channel,security_name,security_channel,
                 open_chat_b_name,open_chat_b_channel,open_chat_c_name,open_chat_c_channel,all_call_name, 
                 all_call_channel} = snapshot.data();
-    conv.ask(`Radio Channel list: ${race_control_channel}: ${race_control_name}. | ${open_chat_a_channel}: ${open_chat_a_name}. | 
-                ${tech_ops_channel}: ${tech_ops_name}. | ${event_production_channel}: ${event_production_name}. | 
-                ${audience_mgmt_channel}: ${audience_mgmt_name}. | ${broadcast_ops_channel}: ${broadcast_ops_name}. |
-                ${broadcast_audio_channel}: ${broadcast_audio_name}. | ${broadcast_video_channel}: ${broadcast_video_name}. | 
-                ${features_channel}: ${features_name}. | ${specialty_channel}: ${specialty_name}. | 
-                ${lighting_audio_channel}: ${lighting_audio_name}. | 
-                ${features_tech_channel}: ${features_tech_name}. | 
-                ${security_channel}: ${security_name}. | 
-                ${open_chat_b_channel}: ${open_chat_b_name}. | 
-                ${open_chat_c_channel}: ${open_chat_c_name}. | 
-                ${all_call_channel}: ${ all_call_name}.` 
+    conv.ask(`Radio Channel list: 
+${race_control_channel}: ${race_control_name}. 
+${open_chat_a_channel}: ${open_chat_a_name}.
+${tech_ops_channel}: ${tech_ops_name}. 
+${event_production_channel}: ${event_production_name}.
+${audience_mgmt_channel}: ${audience_mgmt_name}. 
+${broadcast_ops_channel}: ${broadcast_ops_name}.
+${broadcast_audio_channel}: ${broadcast_audio_name}.
+${broadcast_video_channel}: ${broadcast_video_name}.
+${features_channel}: ${features_name}.
+${specialty_channel}: ${specialty_name}.
+${lighting_audio_channel}: ${lighting_audio_name}.
+${features_tech_channel}: ${features_tech_name}.
+${security_channel}: ${security_name}.
+${open_chat_b_channel}: ${open_chat_b_name}.
+${open_chat_c_channel}: ${open_chat_c_name}.
+${all_call_channel}: ${ all_call_name}.
+                
+                Do you need more info?` 
                );
    
    
@@ -300,7 +310,7 @@ app.intent('transpo.airport_hotel', (conv, {transpoentity}) => {
          return termRef.get()
               .then((snapshot) => {
               const {place, schedule_travel_to, type} = snapshot.data();
-      conv.ask(`The ${type} from the ${place} is ${schedule_travel_to} ` 
+      conv.ask(`The ${type} from the ${place} is ${schedule_travel_to}. Do you need more info? ` 
                   );
            
            
@@ -317,7 +327,7 @@ app.intent('transpo.hotel_airport', (conv, {transpoentity}) => {
           return termRef.get()
                .then((snapshot) => {
                 const {type, schedule_travel_to, place} = snapshot.data();
-         conv.ask(`The ${type} from the ${place} is ${schedule_travel_to} ` 
+         conv.ask(`The ${type} from the ${place} is ${schedule_travel_to}. Do you need more info? ` 
                           );
                    
                    
@@ -334,7 +344,7 @@ app.intent('transpo.hotel_venue', (conv, {transpoentity}) => {
                   return termRef.get()
                        .then((snapshot) => {
                         const {place, schedule_travel_to, type} = snapshot.data();
-                 conv.ask(`The ${type} from the ${place} is ${schedule_travel_to} ` 
+                 conv.ask(`The ${type} from the ${place} is ${schedule_travel_to}. Do you need more info? ` 
                                   );
                            
                            
@@ -351,7 +361,7 @@ app.intent('transpo.venue_hotel', (conv, {transpoentity}) => {
                       return termRef.get()
                            .then((snapshot) => {
                             const {place, schedule_travel_to, type} = snapshot.data();
-                     conv.ask(`The ${type} from the ${place} is ${schedule_travel_to} ` 
+                     conv.ask(`The ${type} from the ${place} is ${schedule_travel_to}. Do you need more info?` 
                                       );
                                
                                
@@ -360,6 +370,31 @@ app.intent('transpo.venue_hotel', (conv, {transpoentity}) => {
                 conv.close('transpo.venue_hotel error.');
                                 });
 }); 
+
+//INTENT MAP FOR SCHEDULE----------------------------------------
+
+app.intent('schedule.lunch', (conv, {scheduleentity}) => {
+    const term = scheduleentity.toLowerCase();
+    const termRef = collectionRefSchedule.doc(`${term}`);
+        return termRef.get()
+            .then((snapshot) => {
+            const {schedule_name, date_one, date_two, date_three, date_four, date_five, date_one_time, date_two_time, date_three_time, date_four_time, date_five_time } = snapshot.data();
+    conv.ask(`${schedule_name}: 
+    ${date_one}: ${date_one_time} |
+    ${date_two}: ${date_two_time} |
+    ${date_three}: ${date_three_time} |
+    ${date_four}: ${date_four_time} |
+    ${date_five}: ${date_five_time}
+    Do you need more information?` 
+               );
+   
+   
+        }).catch((e) => {
+console.log('error:', e);
+conv.close('schedule.lunch error .');
+    });
+}); 
+
 
 // CLOSING - DON'T BREAK THIS
 exports.actionsOracle = functions.https.onRequest(app);
