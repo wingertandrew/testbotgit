@@ -16,8 +16,8 @@
   "dependencies": {
     "actions-on-google": "2.9.0",
     "dialogflow-fulfillment": "^0.5.0",
-    "firebase-admin": "^6.5.1",
-    "firebase-functions": "^3.1.0"
+    "firebase-admin": "^11.4.1",
+    "firebase-functions": "^3.24.1"
   },
   "main": "index.js",
   "devDependencies": {}
